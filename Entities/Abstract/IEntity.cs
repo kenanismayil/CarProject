@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities.Abstract
 {
-    //IEntity implement eden class bir veritabani tablosudur.
+    //Interface'in imzalama yontemi kullanildi.
+    //IEntity implement eden class'lar bir veritabani nesneleri icinde barindiran class'lardir.
     public class IEntity
     {
         
