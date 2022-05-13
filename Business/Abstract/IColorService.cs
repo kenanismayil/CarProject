@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface ICarService
+    public interface IColorService
     {
-        List<Car> GetAll();
-        List<Car> GetCarsByDailyPrice(decimal min, decimal max);
-        void Add(Car entity);
+        List<Color> GetAll();
+        List<Color> GetCarsByColorId(int id);
     }
 }
