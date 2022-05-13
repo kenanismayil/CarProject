@@ -13,7 +13,7 @@ namespace Business.Concrete
         IColorService _colorService;
         public ColorManager(IColorService colorService)
         {
-            _colorService = _colorService;
+            _colorService = colorService;
         }
         public List<Color> GetAll()
         {
