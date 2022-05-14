@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(CarContext))]
-    [Migration("20220514163223_deneme2")]
-    partial class deneme2
+    [Migration("20220514192938_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,9 +53,6 @@ namespace DataAccess.Migrations
 
                     b.Property<double>("DailyPrice")
                         .HasColumnType("float");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelYear")
                         .HasColumnType("int");
