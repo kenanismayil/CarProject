@@ -28,7 +28,7 @@ namespace Business.Concrete
             }
             else
             {
-                Console.WriteLine("ARABA ISMI MINIMUM 2 KARAKTER UZUNLUGUNDA OLMALIDIR!");
+                Console.WriteLine("->EXCEPTION:ARABA ISMI MINIMUM 2 KARAKTER UZUNLUGUNDA OLMALIDIR!!!");
             }
         }
 

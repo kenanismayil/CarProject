@@ -17,13 +17,13 @@ namespace ConsoleUI
 
             Car car1 = new Car()
             {
-                BrandId = 2,
-                CarName = "Audi Q7",
-                ColorId = 3,
-                ModelYear = 2015,
-                DailyPrice = 250
+                BrandId = 4,
+                CarName = "A",
+                ColorId = 4,
+                ModelYear = 2014,
+                DailyPrice = 150
             };
-            //carManager.Add(car1);
+            carManager.Add(car1);
 
             foreach (var c in carManager.GetAll())
             {
