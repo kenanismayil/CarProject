@@ -1,5 +1,4 @@
-﻿using Entities.Abstract;
-using Entities.Concrete;
+﻿using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,6 @@ namespace Business.Abstract
     public interface IBrandService
     {
         List<Brand> GetAll();
-        List<Brand> GetCarsByBrandId(int id);
+        Brand GetByCarId(int id);
     }
 }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(CarContext))]
-    [Migration("20220513172400_Expression")]
-    partial class Expression
+    [Migration("20220514163223_deneme2")]
+    partial class deneme2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
