@@ -44,14 +44,19 @@ namespace Business.Concrete
             return _carDal.GetAll(c => c.DailyPrice > 0 && c.DailyPrice < 100);
         }
 
-        public void Delete(Car entity)
+        public void Delete(Car car)
         {
-            _carDal.Delete(entity);
+            _carDal.Delete(car);
         }
 
         public List<ProductDetailDto> GetProductDetails()
         {
             return _carDal.GetProductDetails();
+        }
+
+        public Car GetByCarId(int id)
+        {
+            return _carDal.Get(c => c.Id == id);
         }
     }
 }

@@ -17,14 +17,14 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand id)
+        public void Add(Brand brand)
         {
-            _brandDal.Add(id);
+            _brandDal.Add(brand);
         }
 
-        public void Delete(Brand id)
+        public void Delete(Brand brand)
         {
-            _brandDal.Delete(id);
+            _brandDal.Delete(brand);
         }
 
         public List<Brand> GetAll()

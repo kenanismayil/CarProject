@@ -17,14 +17,14 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public void Add(Color id)
+        public void Add(Color color)
         {
-            _colorDal.Add(id);
+            _colorDal.Add(color);
         }
 
-        public void Delete(Color id)
+        public void Delete(Color color)
         {
-            _colorDal.Delete(id);
+            _colorDal.Delete(color);
         }
 
         public List<Color> GetAll()

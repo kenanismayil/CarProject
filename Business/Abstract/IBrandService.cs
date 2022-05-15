@@ -11,7 +11,7 @@ namespace Business.Abstract
     {
         List<Brand> GetAll();
         Brand GetByCarId(int id);
-        void Add(Brand id);
-        void Delete(Brand id);
+        void Add(Brand brand);
+        void Delete(Brand brand);
     }
 }
