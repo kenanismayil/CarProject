@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -20,16 +21,16 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car entity)
+        public IResult Add(Car car)
         {
-            if (entity.CarName.Length >= 2)
+            if (car.CarName.Length <= 2)
             {
-                _carDal.Add(entity);
+                return new ErrorResult("->EXCEPTION:ARABA ISMI MINIMUM 2 KARAKTER UZUNLUGUNDA OLMALIDIR!!!");
+
             }
-            else
-            {
-                Console.WriteLine("->EXCEPTION:ARABA ISMI MINIMUM 2 KARAKTER UZUNLUGUNDA OLMALIDIR!!!");
-            }
+
+            _carDal.Add(car);
+            return new SuccessResult("Urun Eklendi");
         }
 
         public List<Car> GetAll()
