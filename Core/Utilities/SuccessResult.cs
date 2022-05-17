@@ -8,6 +8,7 @@ namespace Core.Utilities
 {
     public class SuccessResult:Result
     {
+        //Islem Sonucu Basarili Sonucu
         public SuccessResult(string message):base(true, message)
         {
 

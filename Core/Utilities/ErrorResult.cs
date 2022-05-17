@@ -8,6 +8,7 @@ namespace Core.Utilities
 {
     public class ErrorResult:Result
     {
+        //Islem Sonucu Basarisiz Sonucu
         public ErrorResult(string message):base(false, message)
         {
 

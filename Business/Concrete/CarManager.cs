@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,39 +26,50 @@ namespace Business.Concrete
         {
             if (car.CarName.Length <= 2)
             {
-                return new ErrorResult("->EXCEPTION:ARABA ISMI MINIMUM 2 KARAKTER UZUNLUGUNDA OLMALIDIR!!!");
-
+                return new ErrorResult(Messages.CarNameInvalid);
             }
 
             _carDal.Add(car);
-            return new SuccessResult("Urun Eklendi");
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            //Is Kodlari
-            //Gerekli yetkiler ve.s
+            if (DateTime.Now.Hour == 23)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
 
-            return _carDal.GetAll();
+            var list = _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(list, Messages.CarsListed);   //default success or unsuccess
         }
-        public List<Car> GetCarsByDailyPrice(decimal min, decimal max)
+        public IDataResult<List<Car>> GetCarsByDailyPrice(decimal min, decimal max)
         {
-            return _carDal.GetAll(c => c.DailyPrice > 0 && c.DailyPrice < 100);
+            var dailyPrice = _carDal.GetAll(c => c.DailyPrice > 0 && c.DailyPrice < 100);
+            return new SuccessDataResult<List<Car>>(dailyPrice);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public List<ProductDetailDto> GetProductDetails()
+        public IDataResult<List<CarDetailsDto>> GetCarDetails()
         {
-            return _carDal.GetProductDetails();
+            var carDetails = _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailsDto>>(carDetails);
         }
 
-        public Car GetByCarId(int id)
+        public IDataResult<Car> GetByCarId(int id)
         {
-            return _carDal.Get(c => c.Id == id);
+            if (DateTime.Now.Hour==22)
+            {
+                return new ErrorDataResult<Car>(Messages.MaintenanceTime);
+            }
+
+            var carId = _carDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Car>(carId);
         }
     }
 }
