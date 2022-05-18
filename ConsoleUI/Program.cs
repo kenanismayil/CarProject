@@ -21,9 +21,9 @@ namespace ConsoleUI
             //colorManager.Add(color);
 
 
-            var colors = colorManager.GetAll();
+            var color2 = colorManager.GetAll();
 
-            foreach (var item in colors)
+            foreach (var item in color2.Data)
             {
                 Console.WriteLine(item.ColorName);
             }

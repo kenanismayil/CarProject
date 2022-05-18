@@ -41,5 +41,18 @@ namespace Business.Constants
         public static string RentalListed = "Kiralamalar listelendi";
         public static string RentDatesListed = "Kiralama tarihleri listelendi";
         public static string ReturnDatesListed = "Iade tarihleri listelendi";
+
+        //Color magic string
+        public static string ColorAdded = "Renk eklendi";
+        public static string ColorDeleted = "Renk silindi";
+        public static string ColorsListed = "Renkler listelendi";
+        public static string ColorNameInvalid = "Renk ismi gecersiz";
+
+        //Brand magic string
+        public static string BrandAdded = "Brand eklendi";
+        public static string BrandDeleted = "Brand silindi";
+        public static string BrandsListed = "Brand'ler listelendi";
+        public static string BrandNameInvalid = "Brand ismi gecersiz";
+
     }
 }

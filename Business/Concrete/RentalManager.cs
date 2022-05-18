@@ -54,15 +54,33 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(rentalId);
         }
 
-        //public IDataResult<List<Rental>> GetRentDates()
-        //{
-        //    var dates = _rentDal.GetRentDates();    
-        //    return new SuccessDataResult()
-        //}
 
-        //public IDataResult<List<Rental>> GetReturnDates()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public IDataResult<List<DateTime>> GetRentDates()
+        {
+            List<DateTime> dateTimes = new List<DateTime>();
+
+            var rentals = _rentDal.GetAll();
+
+            foreach (var item in rentals)
+            {
+                DateTime date = item.RentDate;
+                dateTimes.Add(date);
+            }
+            return new SuccessDataResult<List<DateTime>>(dateTimes);
+        }
+
+        public IDataResult<List<DateTime>> GetReturnDates()
+        {
+            List<DateTime> dateReturns = new List<DateTime>();
+
+            var rentals = _rentDal.GetAll();
+            foreach (var item in rentals)
+            {
+                DateTime data = item.RentDate;
+                dateReturns.Add(data);
+            }
+
+            return new SuccessDataResult<List<DateTime>>(dateReturns);      
+        }
     }
 }
