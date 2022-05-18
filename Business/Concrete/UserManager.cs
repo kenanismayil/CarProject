@@ -66,8 +66,7 @@ namespace Business.Concrete
             }
 
             var userId = _userDal.Get(u => u.Id == id);
-            return new SuccessDataResult<User>(userId);
-            
+            return new SuccessDataResult<User>(userId);      
         }
     }
 }
