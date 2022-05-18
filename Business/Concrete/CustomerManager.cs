@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -18,29 +19,46 @@ namespace Business.Concrete
         {
             _customerDal = customerDal;
         }
-        public IResult Add(Customer user)
+        public IResult Add(Customer customer)
         {
-            throw new NotImplementedException();
+            if (customer.CompanyName.Length <= 2)
+            {
+                return new ErrorResult(Messages.CompanyNameInvalid);
+            }
+
+            _customerDal.Add(customer);
+            return new SuccessResult(Messages.CustomerAdded);
         }
 
-        public IResult Delete(Customer user)
+        public IResult Delete(Customer customer)
         {
-            throw new NotImplementedException();
+            _customerDal.Delete(customer);
+            return new SuccessResult(Messages.CustomerDeleted);
         }
 
         public IDataResult<List<Customer>> GetAll()
         {
-            throw new NotImplementedException();
+            var data = _customerDal.GetAll();
+            return new SuccessDataResult<List<Customer>>(data);
         }
 
         public IDataResult<Customer> GetByCustomerId(int id)
         {
-            throw new NotImplementedException();
+            var customerId = _customerDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Customer>(customerId);
         }
 
-        public IDataResult<List<Customer>> GetCompanyNames()
+        public IDataResult<List<String>> GetCompanyNames()
         {
-            throw new NotImplementedException();
+            List<String> companyNames = new List<string>();
+            var customers = _customerDal.GetAll();
+
+            foreach (var item in customers)
+            {
+                String data = item.CompanyName;
+                companyNames.Add(data);
+            }
+            return new SuccessDataResult<List<String>>(companyNames, Messages.CompanyNamesListed);
         }
     }
 }

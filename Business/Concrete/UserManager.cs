@@ -45,11 +45,18 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
 
-        //public IDataResult<List<User>> GetByUserEmails()
-        //{
-        //    var data = _userDal.GetAll();
-        //    return new SuccessDataResult<List<User>>(data, Messages.EmailsListed);
-        //}
+        public IDataResult<List<String>> GetByUserEmails()
+        {
+            List<String> emails = new List<string>();
+            var users = _userDal.GetAll();
+
+            foreach (var item in users)
+            {
+                String data = item.Email;
+                emails.Add(data);
+            }
+            return new SuccessDataResult<List<String>>(emails, Messages.EmailsListed);
+        }
 
         public IDataResult<User> GetById(int id)
         {
