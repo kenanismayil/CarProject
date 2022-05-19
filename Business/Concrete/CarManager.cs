@@ -61,7 +61,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailsDto>>(carDetails);
         }
 
-        public IDataResult<Car> GetByCarId(int id)
+        public IDataResult<Car> GetById(int id)
         {
             if (DateTime.Now.Hour==22)
             {

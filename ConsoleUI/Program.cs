@@ -25,8 +25,13 @@ namespace ConsoleUI
 
             foreach (var item in color2.Data)
             {
-                Console.WriteLine(item.ColorName);
+                if (item.ColorName == "Gri")
+                {
+                    colorManager.Delete(item);
+                }
+
             }
+
 
 
 
