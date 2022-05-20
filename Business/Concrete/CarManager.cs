@@ -7,6 +7,7 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace Business.Concrete
             var list = _carDal.GetAll();
             return new SuccessDataResult<List<Car>>(list, Messages.CarsListed);   //default success or unsuccess
         }
-        public IDataResult<List<Car>> GetCarsByDailyPrice(decimal min, decimal max)
+        public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
             var dailyPrice = _carDal.GetAll(c => c.DailyPrice > 0 && c.DailyPrice < 100);
             return new SuccessDataResult<List<Car>>(dailyPrice);
@@ -70,6 +71,17 @@ namespace Business.Concrete
 
             var carId = _carDal.Get(c => c.Id == id);
             return new SuccessDataResult<Car>(carId);
+        }
+
+        public IResult DeleteAll(Expression<Func<Car, bool>> filter)
+        {
+            _carDal.DeleteAll(filter);
+            return new SuccessResult(Messages.CarDeleted);
+        }
+
+        public IResult Update(Car car)
+        {
+            throw new NotImplementedException();
         }
     }
 }

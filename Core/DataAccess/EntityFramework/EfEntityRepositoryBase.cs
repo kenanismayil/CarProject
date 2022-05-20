@@ -33,6 +33,16 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public void DeleteAll(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new TContext())
+            {
+                //filtre verdigim araligi siler.
+                context.RemoveRange(context.Set<TEntity>().Where(filter));
+                context.SaveChanges();
+            }
+        }
+
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())

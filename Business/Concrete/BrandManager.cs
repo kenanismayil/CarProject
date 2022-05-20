@@ -6,6 +6,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
+        public IResult DeleteAll(Expression<Func<Brand, bool>> filter)
+        {
+            _brandDal.DeleteAll(filter);
+            return new SuccessResult(Messages.BrandDeleted);
+        }
+
         public IDataResult<List<Brand>> GetAll()
         {
             var result = _brandDal.GetAll();
@@ -45,6 +52,16 @@ namespace Business.Concrete
         {
             var data = _brandDal.Get(b => b.Id == id);
             return new SuccessDataResult<Brand>(data);
+        }
+
+        public IDataResult<Brand> GetById(int id)
+        {
+            if (DateTime.Now.Hour == 23)
+            {
+                return new ErrorDataResult<Brand>(Messages.MaintenanceTime);
+            }
+            var result = _brandDal.Get(b => b.Id == id);
+            return new SuccessDataResult<Brand>(result);
         }
     }
 }
