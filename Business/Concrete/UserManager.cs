@@ -37,12 +37,20 @@ namespace Business.Concrete
 
         public IResult Delete(User user)
         {
+            _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
+        }
+
+        public IResult Update(User user)
+        {
+            _userDal.Update(user);
+            return new SuccessResult(Messages.UserUpdated);
         }
 
         public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
+            var result = _userDal.GetAll();
+            return new SuccessDataResult<List<User>>(result, Messages.UsersListed);
         }
 
         public IDataResult<List<String>> GetByUserEmails()
@@ -58,15 +66,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<String>>(emails, Messages.EmailsListed);
         }
 
-        public IDataResult<User> GetById(int id)
+        public IDataResult<User> GetById(int userId)
         {
             if (DateTime.Now.Hour == 23)
             {
                 return new ErrorDataResult<User>(Messages.MaintenanceTime);
             }
 
-            var userId = _userDal.Get(u => u.Id == id);
-            return new SuccessDataResult<User>(userId);      
+            var result = _userDal.Get(u => u.Id == userId);
+            return new SuccessDataResult<User>(result);      
         }
+
+
     }
 }

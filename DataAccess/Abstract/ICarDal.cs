@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DataAccess.Abstract
 {
     //Veri Erisim Islemini yapacak ICarDal interface'i olusturdum.
-    public interface ICarDal:IEntityRepository<Car>
+    public interface ICarDal : IEntityRepository<Car>
     {
         List<CarDetailsDto> GetCarDetails();
     }

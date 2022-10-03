@@ -30,8 +30,22 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CarNameInvalid);
             }
 
+
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
+        }
+
+        public IResult Delete(Car car)
+        {
+            _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
+        }
+
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+            return new SuccessResult(Messages.CarsUpdated);
+
         }
 
         public IDataResult<List<Car>> GetAll()
@@ -46,31 +60,26 @@ namespace Business.Concrete
         }
         public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
-            var dailyPrice = _carDal.GetAll(c => c.DailyPrice > 0 && c.DailyPrice < 100);
-            return new SuccessDataResult<List<Car>>(dailyPrice);
+            var result = _carDal.GetAll(c => c.DailyPrice > 0 && c.DailyPrice < 100);
+            return new SuccessDataResult<List<Car>>(result);
         }
 
-        public IResult Delete(Car car)
-        {
-            _carDal.Delete(car);
-            return new SuccessResult(Messages.CarDeleted);
-        }
 
         public IDataResult<List<CarDetailsDto>> GetCarDetails()
         {
-            var carDetails = _carDal.GetCarDetails();
+            var carDetails = _carDal.GetCarDetails();            
             return new SuccessDataResult<List<CarDetailsDto>>(carDetails);
         }
 
-        public IDataResult<Car> GetById(int id)
+        public IDataResult<Car> GetCarsByBrandId(int brandId)
         {
             if (DateTime.Now.Hour==22)
             {
                 return new ErrorDataResult<Car>(Messages.MaintenanceTime);
             }
 
-            var carId = _carDal.Get(c => c.Id == id);
-            return new SuccessDataResult<Car>(carId);
+            var result = _carDal.Get(c => c.BrandId == brandId);
+            return new SuccessDataResult<Car>(result);
         }
 
         public IResult DeleteAll(Expression<Func<Car, bool>> filter)
@@ -79,9 +88,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
-        public IResult Update(Car car)
+
+
+        public IDataResult<Car> GetCarsByColorId(int colorId)
         {
-            throw new NotImplementedException();
+            var result = _carDal.Get(c => c.ColorId == colorId);
+            return new SuccessDataResult<Car>(result);
         }
     }
 }

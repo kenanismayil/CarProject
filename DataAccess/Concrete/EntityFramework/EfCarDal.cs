@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
+using DataAccess.Context;
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -18,17 +19,20 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarContext context = new CarContext())
             {
-                var result = from col in context.Colors
-                             join c in context.Cars                            
-                             on col.Id equals c.ColorId
+                //CarDetails tablosundaki kolonlar select new CarDetailsDto içinde belirttim ve bunları join yaptım.
+                var result = from c in context.Cars
                              join b in context.Brands
                              on c.BrandId equals b.Id
+                             join m in context.Models
+                             on c.ModelId equals m.Id
+                             join col in context.Colors
+                             on c.Id equals col.Id
                              select new CarDetailsDto
                              {
-                                 CarId = c.Id,
-                                 CarName = c.CarName,
-                                 BrandName = b.BrandName,
-                                 DailyPrice = c.DailyPrice,
+                                 CarId = c.Id, CarName = c.CarName, DailyPrice = c.DailyPrice,
+                                 BrandId = b.Id, BrandName = b.BrandName,
+                                 ModelId = m.Id,
+                                 ModelYear = m.ModelYear,
                                  ColorName = col.ColorName
                              };
                 return result.ToList();

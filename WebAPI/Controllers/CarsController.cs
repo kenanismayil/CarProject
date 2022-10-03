@@ -19,30 +19,6 @@ namespace WebAPI.Controllers
             _carService = carService;
         }
 
-        //Araba nesnesinin tum listesini verir.
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            var result = _carService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
-
-        //Araba nesnesini id'ye gore listesini verir.
-        [HttpGet("getbyId")]
-        public IActionResult GetById(int id)
-        {
-            var result = _carService.GetById(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest();
-        }
 
         //Yeni araba nesnesi eklenir.
         [HttpPost("add")]
@@ -91,6 +67,31 @@ namespace WebAPI.Controllers
             }
 
             return BadRequest(result);
+        }
+
+        //Araba nesnesinin tum listesini verir.
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            var result = _carService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        //Araba nesnesini id'ye gore listesini verir.
+        [HttpGet("getbyId")]
+        public IActionResult GetCarsByBrandId(int brandId)
+        {
+            var result = _carService.GetCarsByBrandId(brandId);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest();
         }
 
         //Arabalarin verecegimiz min ve max gunluk fiyatlarina gore listeler.

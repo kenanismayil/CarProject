@@ -38,6 +38,9 @@ namespace WebAPI
             //Brand
             services.AddSingleton<IBrandService, BrandManager>();
             services.AddSingleton<IBrandDal, EfBrandDal>();
+            //Model
+            services.AddSingleton<IModelService, ModelManager>();
+            services.AddSingleton<IModelDal, EfModelDal>();
             //Color
             services.AddSingleton<IColorService, ColorManager>();
             services.AddSingleton<IColorDal, EfColorDal>();

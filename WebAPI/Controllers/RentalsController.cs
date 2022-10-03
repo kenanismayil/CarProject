@@ -11,20 +11,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : Controller
+    public class RentalsController : Controller
     {
-        IBrandService _brandService;
-        public BrandsController(IBrandService brandService)
+        IRentalService _rentalService;
+        public RentalsController(IRentalService rentalService)
         {
-            _brandService = brandService;
+            _rentalService = rentalService;
         }
 
 
-        //Yeni brand nesnesi eklenir.
         [HttpPost("add")]
-        public IActionResult Add(Brand brand)
+        public IActionResult Add(Rental rental)
         {
-            var result = _brandService.Add(brand);
+            var result = _rentalService.Add(rental);
             if (result.Success)
             {
                 return Ok(result);
@@ -32,11 +31,10 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        //Brand nesnesini siler.
         [HttpDelete("delete")]
-        public IActionResult Delete(Brand brand)
+        public IActionResult Delete(Rental rental)
         {
-            var result = _brandService.Delete(brand);
+            var result = _rentalService.Delete(rental);
             if (result.Success)
             {
                 return Ok(result);
@@ -44,22 +42,11 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        //Verilen filtre gore brand nesnelerini siler.
-        [HttpDelete("deleteAll")]
-        public IActionResult DeleteAll(Expression<Func<Brand, bool>> filter)
-        {
-            var result = _brandService.DeleteAll(filter);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Message);
-        }
 
         [HttpPut("update")]
-        public IActionResult Update(Brand brand)
+        public IActionResult Update(Rental rental)
         {
-            var result = _brandService.Update(brand);
+            var result = _rentalService.Update(rental);
             if (result.Success)
             {
                 return Ok(result);
@@ -68,12 +55,10 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-
-        //Brand nesnesinin tum listesini verir.
-        [HttpGet("getAll")]
-        public IActionResult GetAll()
+        [HttpGet("getAllRentalCars")]
+        public IActionResult GetAllRentalCars()
         {
-            var result = _brandService.GetAll();
+            var result = _rentalService.GetAllRentalCars();
             if (result.Success)
             {
                 return Ok(result);
@@ -82,23 +67,10 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        //Brand nesnesini id'ye gore listesini verir.
-        [HttpGet("getbyId")]
-        public IActionResult GetById(int brandId)
+        [HttpGet("getByRentalId")]
+        public IActionResult GetByRentalId(int rentalId)
         {
-            var result = _brandService.GetById(brandId);
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-            return BadRequest(result.Message);
-        }
-
-        //Verilen car id'ye gore brand'leri listeler.
-        [HttpGet("getbyCarId")]
-        public IActionResult GetByCarId(int carId)
-        {
-            var result = _brandService.GetByCarId(carId);
+            var result = _rentalService.GetByRentalId(rentalId);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -107,7 +79,39 @@ namespace WebAPI.Controllers
         }
 
 
+        [HttpDelete("getNotRentalCars")]
+        public IActionResult GetNotRentalCars()
+        {
+            var result = _rentalService.GetNotRentalCars();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
 
 
+        [HttpGet("getRentalCars")]
+        public IActionResult GetRentalCars()
+        {
+            var result = _rentalService.GetRentalCars();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("getRentalDetails")]
+        public IActionResult GetRentalCarDetails()
+        {
+            var result = _rentalService.GetRentalCarDetails();
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
     }
 }

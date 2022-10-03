@@ -3,6 +3,7 @@ using Business.Constants;
 using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,12 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if (rental.ReturnDate <= rental.RentDate)
+            //Ilgili arabanin kiralanabilmesi icin veritabaina eriserek ekranda tikladigim arabanin id"si ile esleme yapilir.
+            //Arabanin kiralanabilmesi icin arabanin teslim edilmesi gerekir.
+            //Ayni zamanda araba teslim edilmemisse, ReturnDate null"dir.
+            var rentalCar = _rentDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
+            //rentalCar bos degilse, yani kiralanmaya uygun degilse error mesaji verilir.
+            if (rentalCar != null)
             {
                 return new ErrorResult(Messages.RentalInvalid);
             }
@@ -37,50 +43,48 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalDeleted);
         }
 
-        public IDataResult<List<Rental>> GetAll()
+        public IResult Update(Rental rental)
         {
-            var dataList = _rentDal.GetAll();
-            return new SuccessDataResult<List<Rental>>(dataList, Messages.RentalListed);
+            _rentDal.Update(rental);
+            return new SuccessResult(Messages.RentalUpdated);
         }
 
-        public IDataResult<Rental> GetByRentalId(int id)
+
+        public IDataResult<List<Rental>> GetAllRentalCars()
+        {
+            var result = _rentDal.GetAll();
+            return new SuccessDataResult<List<Rental>>(result, Messages.RentalListed);
+        }
+
+        public IDataResult<Rental> GetByRentalId(int rentalId)
         {
             if (DateTime.Now.Hour == 23)
             {
                 return new ErrorDataResult<Rental>(Messages.MaintenanceTime);
             }
 
-            var rentalId = _rentDal.Get(r => r.Id == id);
-            return new SuccessDataResult<Rental>(rentalId);
+            var result = _rentDal.Get(r => r.Id == rentalId);
+            return new SuccessDataResult<Rental>(result);
         }
 
-
-        public IDataResult<List<DateTime>> GetRentDates()
+        //Kural: Arabayi geri iade edilmemisse, ReturnDate null'dur. 
+        //Kiralayamadigimiz arabalarin listesini verir. (ps: Teslim edilmeyen arabalar kiralanamaz)
+        public IDataResult<List<Rental>> GetNotRentalCars()
         {
-            List<DateTime> dateTimes = new List<DateTime>();
-
-            var rentals = _rentDal.GetAll();
-
-            foreach (var item in rentals)
-            {
-                DateTime date = item.RentDate;
-                dateTimes.Add(date);
-            }
-            return new SuccessDataResult<List<DateTime>>(dateTimes);
+            return new SuccessDataResult<List<Rental>>(_rentDal.GetAll(r=>r.ReturnDate == null));         //teslim edilmeyen arabalar
         }
 
-        public IDataResult<List<DateTime>> GetReturnDates()
+        //Kiralayabilecegimiz arabalarin listesini verir. 
+        public IDataResult<List<Rental>> GetRentalCars()
         {
-            List<DateTime> dateReturns = new List<DateTime>();
-
-            var rentals = _rentDal.GetAll();
-            foreach (var item in rentals)
-            {
-                DateTime data = item.RentDate;
-                dateReturns.Add(data);
-            }
-
-            return new SuccessDataResult<List<DateTime>>(dateReturns);      
+            return new SuccessDataResult<List<Rental>>(_rentDal.GetAll(r => r.ReturnDate != null));     //teslim edilen arabalar
         }
+
+        //Kiralanmiş arabalarin detayini getirir.
+        public IDataResult<List<RentalDetailDto>> GetRentalCarDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentDal.GetRentalDetailDto());
+        }
+
     }
 }

@@ -31,16 +31,24 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ColorDeleted);
         }
 
-        public IDataResult<List<Color>> GetAll()
-        { 
-            var data = _colorDal.GetAll();
-            return new SuccessDataResult<List<Color>>(data, Messages.ColorsListed);
+        public IResult Update(Color color)
+        {
+            _colorDal.Update(color);
+            return new SuccessResult(Messages.ColorUpdated);
         }
 
-        public IDataResult<Color> GetById(int id)
-        {
-            var colorId = _colorDal.Get(c => c.Id == id);
-            return new SuccessDataResult<Color>(colorId);
+        public IDataResult<List<Color>> GetAll()
+        { 
+            var result = _colorDal.GetAll();
+            return new SuccessDataResult<List<Color>>(result, Messages.ColorsListed);
         }
+
+        public IDataResult<Color> GetById(int colorId)
+        {
+            var result = _colorDal.Get(c => c.Id == colorId);
+            return new SuccessDataResult<Color>(result);
+        }
+
+
     }
 }

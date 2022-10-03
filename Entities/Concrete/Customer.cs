@@ -14,7 +14,7 @@ namespace Entities.Concrete
         public int UserId { get; set; }
         public string CompanyName { get; set; }
 
-        //Foreign Keys
+        //Foreign Key tanımlamaları
         [ForeignKey("UserId")]
         public User User { get; set; }
     }

@@ -12,10 +12,11 @@ namespace Business.Abstract
     public interface IBrandService
     {
         IDataResult<List<Brand>> GetAll();
-        IDataResult<Brand> GetById(int id);
-        IDataResult<Brand> GetByCarId(int id);
+        IDataResult<Brand> GetById(int brandId);
+        IDataResult<Brand> GetByCarId(int carId);
         IResult Add(Brand brand);
         IResult Delete(Brand brand);
         IResult DeleteAll(Expression<Func<Brand, bool>> filter);
+        IResult Update(Brand brand);
     }
 }

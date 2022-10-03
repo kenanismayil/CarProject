@@ -42,26 +42,34 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
+        public IResult Update(Brand brand)
+        {
+            _brandDal.Update(brand);
+            return new SuccessResult(Messages.BrandUpdated);
+        }
+
         public IDataResult<List<Brand>> GetAll()
         {
             var result = _brandDal.GetAll();
             return new SuccessDataResult<List<Brand>>(result, Messages.BrandsListed);
         }
 
-        public IDataResult<Brand> GetByCarId(int id)
+        public IDataResult<Brand> GetByCarId(int carId)
         {
-            var data = _brandDal.Get(b => b.Id == id);
-            return new SuccessDataResult<Brand>(data);
+            var result = _brandDal.Get(b => b.Id == carId);
+            return new SuccessDataResult<Brand>(result);
         }
 
-        public IDataResult<Brand> GetById(int id)
+        public IDataResult<Brand> GetById(int brandId)
         {
             if (DateTime.Now.Hour == 23)
             {
                 return new ErrorDataResult<Brand>(Messages.MaintenanceTime);
             }
-            var result = _brandDal.Get(b => b.Id == id);
+            var result = _brandDal.Get(b => b.Id == brandId);
             return new SuccessDataResult<Brand>(result);
         }
+
+
     }
 }

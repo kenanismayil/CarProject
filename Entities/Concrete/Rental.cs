@@ -21,7 +21,7 @@ namespace Entities.Concrete
         [DefaultValue(null)]
         public DateTime ReturnDate { get; set; }
 
-        //Foreign Key
+        //Foreign key tanımlamaları
         [ForeignKey("CarId")]
         public Car Car { get; set; }
 
